@@ -1,9 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { Calendar, Repeat } from 'lucide-react';
 import { useCalendar } from '@/hooks/useCalendar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { formatDate, formatTime, getDayName, toDateString } from '@/lib/utils/date';
 
 export function CalendarWidget() {
@@ -23,93 +22,59 @@ export function CalendarWidget() {
     })
     .slice(0, 5);
 
-  const weekRange = `${formatDate(currentWeekStart)} - ${formatDate(weekEnd)}`;
-
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">📅</span>
-          <div className="flex-1">
-            <CardTitle>This Week</CardTitle>
-            <CardDescription>{weekRange}</CardDescription>
+    <div className="bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-200 animate-slide-up" style={{ animationDelay: '50ms' }}>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-secondary rounded-lg">
+            <Calendar size={20} className="text-primary" />
           </div>
+          <h2 className="text-lg font-semibold">This Week</h2>
         </div>
-      </CardHeader>
-      <CardContent>
-        {isLoading ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <div className="text-sm">Loading events...</div>
-          </div>
-        ) : upcomingEvents.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <p className="mb-4">No events this week</p>
-            <Link href="/calendar">
-              <Button variant="outline" size="sm">
-                Add Event
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {upcomingEvents.map((event) => {
-              const eventDate = new Date(event.event_date);
-              const isEventToday = event.event_date === todayStr;
+      </div>
 
-              return (
-                <div
-                  key={event.id}
-                  className={`p-3 rounded-md border ${
-                    isEventToday
-                      ? 'bg-blue-50 border-blue-200'
-                      : 'bg-muted/50 border-border'
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="text-center min-w-[48px]">
-                      <div className="text-xs font-medium text-muted-foreground uppercase">
-                        {getDayName(eventDate)}
-                      </div>
-                      <div className={`text-lg font-bold ${isEventToday ? 'text-primary' : 'text-foreground'}`}>
-                        {eventDate.getDate()}
-                      </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start gap-1">
-                        {event.is_recurring && (
-                          <span className="text-xs" title="Recurring event">
-                            🔁
-                          </span>
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm text-foreground truncate">
-                            {event.title}
-                          </div>
-                          <div className="text-xs text-muted-foreground mt-1">
-                            {formatTime(event.start_time)} - {formatTime(event.end_time)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      {isLoading ? (
+        <div className="text-center py-4">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      ) : upcomingEvents.length === 0 ? (
+        <div className="mb-4">
+          <p className="text-sm text-muted-foreground">No events scheduled</p>
+        </div>
+      ) : (
+        <div className="space-y-3 mb-4">
+          {upcomingEvents.map((event) => {
+            const eventDate = new Date(event.event_date);
+            const isEventToday = event.event_date === todayStr;
+
+            return (
+              <div key={event.id} className="flex items-start gap-3">
+                <div className="text-xs font-mono text-muted-foreground pt-0.5 w-12">
+                  {formatTime(event.start_time)}
                 </div>
-              );
-            })}
-
-            {events.length > upcomingEvents.length && (
-              <div className="text-xs text-muted-foreground text-center pt-2">
-                +{events.length - upcomingEvents.length} more events this week
+                <div className="flex-1">
+                  <div className="flex items-center gap-1.5">
+                    {event.is_recurring && (
+                      <Repeat size={12} className="text-muted-foreground" />
+                    )}
+                    <p className="text-sm font-medium">{event.title}</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {getDayName(eventDate)}, {formatDate(event.event_date)}
+                  </p>
+                </div>
               </div>
-            )}
+            );
+          })}
+        </div>
+      )}
 
-            <Link href="/calendar" className="block">
-              <Button variant="outline" className="w-full mt-4">
-                View Full Week →
-              </Button>
-            </Link>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      <Link
+        href="/calendar"
+        className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+      >
+        View week →
+      </Link>
+    </div>
   );
 }

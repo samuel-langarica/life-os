@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Repeat, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCalendar } from '@/hooks/useCalendar';
 import { EventModal } from '@/components/calendar/EventModal';
 import { CalendarEvent } from '@/lib/api/calendar';
@@ -57,10 +58,10 @@ export default function CalendarPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-foreground">Calendar</h1>
-        <p className="text-muted-foreground mt-1">Weekly schedule and events</p>
-      </div>
+      <header className="mb-8">
+        <h1 className="text-2xl font-semibold mb-2">Calendar</h1>
+        <p className="text-muted-foreground">Weekly schedule and events</p>
+      </header>
 
       <div className="space-y-6">
         {/* Week navigation */}
@@ -69,19 +70,15 @@ export default function CalendarPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <Button variant="outline" size="sm" onClick={goToPrevWeek} disabled={isLoading}>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <ChevronLeft size={16} />
                   <span className="ml-1">Prev</span>
                 </Button>
-                <h2 className="text-xl font-semibold text-foreground">
+                <h2 className="text-lg font-semibold text-foreground">
                   Week of {formatDateRange(currentWeekStart, weekEnd)}
                 </h2>
                 <Button variant="outline" size="sm" onClick={goToNextWeek} disabled={isLoading}>
                   <span className="mr-1">Next</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <ChevronRight size={16} />
                 </Button>
               </div>
               <div className="flex items-center gap-2">
@@ -89,9 +86,7 @@ export default function CalendarPage() {
                   Today
                 </Button>
                 <Button size="sm" onClick={() => handleAddEvent()}>
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
+                  <Plus size={16} className="mr-1" />
                   Add Event
                 </Button>
               </div>
@@ -145,8 +140,8 @@ export default function CalendarPage() {
                             >
                               <div className="flex items-start gap-1">
                                 {event.is_recurring && (
-                                  <span className="text-xs" title="Recurring event">
-                                    🔁
+                                  <span title="Recurring event">
+                                    <Repeat size={12} className="text-muted-foreground" />
                                   </span>
                                 )}
                                 <div className="flex-1 min-w-0">

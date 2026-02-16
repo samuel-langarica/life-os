@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import useSWR from 'swr';
+import { Inbox, Copy, Check, Trash2 } from 'lucide-react';
 import { capturesApi, type Capture } from '@/lib/api/captures';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
@@ -99,19 +100,21 @@ export default function CapturesPage() {
   const count = captures.length;
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-foreground">Inbox</h1>
-        <p className="text-muted-foreground mt-1">
-          {count === 0 ? 'All captures processed' : `${count} ${count === 1 ? 'capture' : 'captures'} to process`}
+    <div className="max-w-4xl mx-auto animate-fade-in">
+      <header className="mb-8">
+        <h1 className="text-2xl font-semibold mb-2">Inbox</h1>
+        <p className="text-muted-foreground">
+          {count === 0 ? 'Inbox clear' : `${count} ${count === 1 ? 'item' : 'items'} to process`}
         </p>
-      </div>
+      </header>
 
       {captures.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="text-6xl mb-4">📥</div>
-          <h2 className="text-xl font-semibold text-foreground mb-2">Inbox Zero!</h2>
-          <p className="text-muted-foreground">All captures processed</p>
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="p-4 bg-secondary rounded-xl mb-4">
+            <Inbox size={48} className="text-muted-foreground" />
+          </div>
+          <h2 className="text-lg font-semibold mb-1">Inbox clear</h2>
+          <p className="text-sm text-muted-foreground">All items processed</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -151,15 +154,15 @@ function CaptureCard({
 }: CaptureCardProps) {
   const getSourceBadge = (source: string) => {
     const badges: Record<string, { label: string; color: string }> = {
-      manual: { label: 'Manual', color: 'bg-gray-100 text-gray-800' },
-      siri: { label: 'Siri', color: 'bg-purple-100 text-purple-800' },
-      external: { label: 'External', color: 'bg-blue-100 text-blue-800' },
+      manual: { label: 'Manual', color: 'bg-secondary text-foreground' },
+      siri: { label: 'Siri', color: 'bg-secondary text-foreground' },
+      external: { label: 'External', color: 'bg-secondary text-foreground' },
     };
 
     const badge = badges[source] || badges.manual;
 
     return (
-      <span className={`text-xs px-2 py-1 rounded-full ${badge.color}`}>
+      <span className={`text-xs px-2 py-1 rounded-md ${badge.color}`}>
         {badge.label}
       </span>
     );
@@ -168,11 +171,11 @@ function CaptureCard({
   const isDisabled = isDeleting || isMarkingDone;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
-      <p className="text-gray-900 mb-3 whitespace-pre-wrap">{capture.text}</p>
+    <div className="bg-card border border-border rounded-xl p-4 hover-lift transition-all duration-200 animate-slide-up">
+      <p className="text-foreground mb-4 whitespace-pre-wrap">{capture.text}</p>
 
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm text-gray-500">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <span>{formatDate(capture.created_at)}</span>
           <span>•</span>
           {getSourceBadge(capture.source)}
@@ -182,23 +185,26 @@ function CaptureCard({
           <button
             onClick={() => onCopy(capture.text)}
             disabled={isDisabled}
-            className="text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded text-sm font-medium transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 text-foreground hover:text-primary hover:bg-secondary/50 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 disabled:opacity-50"
           >
-            Copy
+            <Copy size={14} />
+            <span>Copy</span>
           </button>
           <button
             onClick={() => onMarkDone(capture.id)}
             disabled={isDisabled}
-            className="text-green-600 hover:bg-green-50 px-3 py-1.5 rounded text-sm font-medium transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 text-foreground hover:text-primary hover:bg-secondary/50 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 disabled:opacity-50"
           >
-            {isMarkingDone ? 'Processing...' : 'Done'}
+            <Check size={14} />
+            <span>{isMarkingDone ? 'Processing...' : 'Done'}</span>
           </button>
           <button
             onClick={() => onDelete(capture.id)}
             disabled={isDisabled}
-            className="text-red-600 hover:bg-red-50 px-3 py-1.5 rounded text-sm font-medium transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 text-destructive hover:bg-destructive/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 disabled:opacity-50"
           >
-            {isDeleting ? 'Deleting...' : 'Delete'}
+            <Trash2 size={14} />
+            <span>{isDeleting ? 'Deleting...' : 'Delete'}</span>
           </button>
         </div>
       </div>

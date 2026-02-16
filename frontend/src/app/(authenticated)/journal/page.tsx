@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import Link from 'next/link';
+import { Sunrise, Moon, Flame, Check, Circle, BookOpen } from 'lucide-react';
 import { journalApi, type JournalEntry } from '@/lib/api/journal';
 import { formatDate } from '@/lib/utils';
 
@@ -32,10 +33,10 @@ export default function JournalPage() {
   const recentEntries = entries?.entries.slice(0, 10) || [];
 
   const getEntryTypeDisplay = (type: string) => {
-    const displays: Record<string, { icon: string; label: string; color: string }> = {
-      morning_pages: { icon: '🌅', label: 'Morning Pages', color: 'text-purple-600 bg-purple-50' },
-      daily_reflection: { icon: '🌙', label: 'Daily Reflection', color: 'text-blue-600 bg-blue-50' },
-      weekly_review: { icon: '📝', label: 'Weekly Review', color: 'text-green-600 bg-green-50' },
+    const displays: Record<string, { icon: any; label: string; color: string }> = {
+      morning_pages: { icon: Sunrise, label: 'Morning Pages', color: 'bg-secondary text-foreground' },
+      daily_reflection: { icon: Moon, label: 'Daily Reflection', color: 'bg-secondary text-foreground' },
+      weekly_review: { icon: BookOpen, label: 'Weekly Review', color: 'bg-secondary text-foreground' },
     };
     return displays[type] || displays.morning_pages;
   };
@@ -52,57 +53,61 @@ export default function JournalPage() {
   }
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-foreground">Journal</h1>
-        <p className="text-muted-foreground mt-1">Morning pages, reflections, and weekly reviews</p>
-      </div>
+    <div className="animate-fade-in">
+      <header className="mb-8">
+        <h1 className="text-2xl font-semibold mb-2">Journal</h1>
+        <p className="text-muted-foreground">Morning pages, reflections, and weekly reviews</p>
+      </header>
 
       {/* Today's Status */}
       <div className="grid gap-6 md:grid-cols-2 mb-8">
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-200">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                🌅 Morning Pages
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                {status?.morning_pages_streak || 0} day streak 🔥
-              </p>
+              <div className="flex items-center gap-2 mb-2">
+                <Sunrise size={20} className="text-primary" />
+                <h2 className="text-lg font-semibold">Morning Pages</h2>
+              </div>
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Flame size={14} className="text-primary" />
+                <span className="tabular-nums">{status?.morning_pages_streak || 0} day streak</span>
+              </div>
             </div>
             {todayMorningPages ? (
-              <span className="text-green-600 text-2xl">✓</span>
+              <Check size={24} className="text-primary" />
             ) : (
-              <span className="text-gray-300 text-2xl">○</span>
+              <Circle size={24} className="text-muted-foreground" />
             )}
           </div>
           <Link
             href="/journal/morning-pages"
-            className="inline-block px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-150 font-medium text-sm"
           >
             {todayMorningPages ? 'Read Entry' : 'Write Now'}
           </Link>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-200">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                🌙 Daily Reflection
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                {status?.daily_reflection_streak || 0} day streak 🔥
-              </p>
+              <div className="flex items-center gap-2 mb-2">
+                <Moon size={20} className="text-primary" />
+                <h2 className="text-lg font-semibold">Daily Reflection</h2>
+              </div>
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Flame size={14} className="text-primary" />
+                <span className="tabular-nums">{status?.daily_reflection_streak || 0} day streak</span>
+              </div>
             </div>
             {todayReflection ? (
-              <span className="text-green-600 text-2xl">✓</span>
+              <Check size={24} className="text-primary" />
             ) : (
-              <span className="text-gray-300 text-2xl">○</span>
+              <Circle size={24} className="text-muted-foreground" />
             )}
           </div>
           <Link
             href="/journal/reflection"
-            className="inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-150 font-medium text-sm"
           >
             {todayReflection ? 'Read Entry' : 'Write Now'}
           </Link>
@@ -110,25 +115,25 @@ export default function JournalPage() {
       </div>
 
       {/* This Week */}
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 mb-8">
-        <h2 className="text-xl font-semibold mb-4">This Week</h2>
+      <div className="bg-card border border-border rounded-xl p-6 mb-8">
+        <h2 className="text-lg font-semibold mb-4">This Week</h2>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Entries written this week</p>
-              <p className="text-sm text-muted-foreground">{status?.entries_this_week || 0} entries</p>
+              <p className="font-medium text-sm">Entries written this week</p>
+              <p className="text-sm text-muted-foreground tabular-nums">{status?.entries_this_week || 0} entries</p>
             </div>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pt-4 border-t border-border">
             <div>
-              <p className="font-medium">Sunday Review</p>
+              <p className="font-medium text-sm">Sunday Review</p>
               <p className="text-sm text-muted-foreground">
-                {status?.weekly_review_completed ? 'Completed ✓' : 'Not done yet'}
+                {status?.weekly_review_completed ? 'Completed' : 'Not done yet'}
               </p>
             </div>
             <Link
               href="/journal/weekly-review"
-              className="inline-block px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-150 font-medium text-sm"
             >
               {status?.weekly_review_completed ? 'View Review' : 'Start Review'}
             </Link>
@@ -137,33 +142,34 @@ export default function JournalPage() {
       </div>
 
       {/* Recent Entries */}
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+      <div className="bg-card border border-border rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Recent Entries</h2>
+          <h2 className="text-lg font-semibold">Recent Entries</h2>
           <Link
             href="/journal/timeline"
-            className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+            className="text-primary hover:text-primary/80 text-sm font-medium transition-colors"
           >
             View All →
           </Link>
         </div>
         {recentEntries.length === 0 ? (
-          <p className="text-center py-8 text-muted-foreground">No entries yet. Start writing!</p>
+          <p className="text-center py-8 text-muted-foreground text-sm">No entries yet. Start writing!</p>
         ) : (
           <div className="space-y-2">
             {recentEntries.map((entry: JournalEntry) => {
               const display = getEntryTypeDisplay(entry.entry_type);
+              const Icon = display.icon;
               return (
                 <Link
                   key={entry.id}
                   href={`/journal/entry/${entry.id}`}
-                  className="block p-3 rounded-md hover:bg-gray-50 transition-colors"
+                  className="block p-3 rounded-lg hover:bg-secondary/50 transition-all duration-150"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{display.icon}</span>
+                    <Icon size={20} className="text-primary" />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className={`text-xs px-2 py-1 rounded-full ${display.color}`}>
+                        <span className={`text-xs px-2 py-1 rounded-md ${display.color}`}>
                           {display.label}
                         </span>
                         <span className="text-sm text-muted-foreground">

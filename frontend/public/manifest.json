@@ -1,11 +1,11 @@
 {
-  "name": "Life OS",
-  "short_name": "Life OS",
-  "description": "Your Weekly Command Center",
+  "name": "Command",
+  "short_name": "Command",
+  "description": "Your personal operating system for productivity",
   "start_url": "/dashboard",
   "display": "standalone",
-  "background_color": "#1A1A1A",
-  "theme_color": "#2563EB",
+  "background_color": "#0A0A0A",
+  "theme_color": "#F59E0B",
   "orientation": "any",
   "icons": [
     {

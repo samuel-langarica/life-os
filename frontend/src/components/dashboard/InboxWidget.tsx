@@ -2,9 +2,8 @@
 
 import useSWR from 'swr';
 import Link from 'next/link';
+import { Inbox } from 'lucide-react';
 import { capturesApi } from '@/lib/api/captures';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 export function InboxWidget() {
   const { data, error, isLoading } = useSWR(
@@ -15,39 +14,41 @@ export function InboxWidget() {
   const count = data?.count ?? 0;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Inbox</CardTitle>
-        <CardDescription>Captured ideas and quick notes</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {isLoading ? (
-          <div className="text-center py-8">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p className="text-sm text-muted-foreground mt-2">Loading...</p>
+    <div className="bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-200 animate-slide-up">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-secondary rounded-lg">
+            <Inbox size={20} className="text-primary" />
           </div>
-        ) : error ? (
-          <div className="text-center py-8 text-red-600">
-            <p>Failed to load inbox count</p>
-          </div>
-        ) : count === 0 ? (
-          <div className="text-center py-8">
-            <div className="text-4xl mb-2">📥</div>
-            <p className="text-muted-foreground">Inbox Zero!</p>
-            <p className="text-sm text-muted-foreground mt-1">All captures processed</p>
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <div className="text-5xl font-bold text-blue-600 mb-2">{count}</div>
-            <p className="text-muted-foreground mb-4">
-              {count === 1 ? 'capture' : 'captures'} to process
+          <h2 className="text-lg font-semibold">Inbox</h2>
+        </div>
+      </div>
+
+      {isLoading ? (
+        <div className="text-center py-4">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      ) : error ? (
+        <div className="text-sm text-destructive">Failed to load inbox count</div>
+      ) : (
+        <>
+          <div className="mb-4">
+            <div className="text-3xl font-semibold tabular-nums">{count}</div>
+            <p className="text-sm text-muted-foreground">
+              {count === 0 ? 'Inbox clear' : count === 1 ? 'item to process' : 'items to process'}
             </p>
-            <Link href="/captures">
-              <Button>Process Now</Button>
-            </Link>
           </div>
-        )}
-      </CardContent>
-    </Card>
+
+          {count > 0 && (
+            <Link
+              href="/captures"
+              className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              Process now →
+            </Link>
+          )}
+        </>
+      )}
+    </div>
   );
 }

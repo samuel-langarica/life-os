@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import useSWR from 'swr';
+import { BookOpen, Flame, Sunrise, Moon } from 'lucide-react';
 import { journalApi } from '@/lib/api/journal';
 
 export function JournalWidget() {
@@ -24,99 +25,63 @@ export function JournalWidget() {
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-        <h2 className="text-xl font-semibold mb-4">📓 Journal Status</h2>
-        <p className="text-muted-foreground text-sm">Loading...</p>
+      <div className="bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-200 animate-slide-up" style={{ animationDelay: '100ms' }}>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-secondary rounded-lg">
+            <BookOpen size={20} className="text-primary" />
+          </div>
+          <h2 className="text-lg font-semibold">Journal</h2>
+        </div>
+        <div className="text-center py-4">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+    <div className="bg-card border border-border rounded-xl p-6 hover-lift transition-all duration-200 animate-slide-up" style={{ animationDelay: '100ms' }}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">📓 Journal Status</h2>
-        <Link
-          href="/journal"
-          className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-        >
-          View All →
-        </Link>
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-secondary rounded-lg">
+            <BookOpen size={20} className="text-primary" />
+          </div>
+          <h2 className="text-lg font-semibold">Journal</h2>
+        </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 mb-4">
         {/* Morning Pages */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🌅</span>
-            <div>
-              <p className="font-medium">Morning Pages</p>
-              <p className="text-sm text-muted-foreground">
-                {status?.morning_pages_streak ? (
-                  <span className="text-orange-600 font-semibold">
-                    🔥 {status.morning_pages_streak} day streak
-                  </span>
-                ) : (
-                  <span>No streak yet</span>
-                )}
-              </p>
-            </div>
+          <div className="flex items-center gap-2">
+            <Sunrise size={16} className="text-muted-foreground" />
+            <span className="text-sm">Morning pages</span>
           </div>
-          {todayMorningPages ? (
-            <span className="text-green-600 text-xl font-bold">✓</span>
-          ) : (
-            <Link
-              href="/journal/morning-pages"
-              className="px-3 py-1.5 bg-purple-600 text-white rounded-md text-sm hover:bg-purple-700 transition-colors"
-            >
-              Write
-            </Link>
-          )}
+          <div className="flex items-center gap-1.5">
+            <Flame size={16} className="text-primary" />
+            <span className="text-sm font-medium tabular-nums">{status?.morning_pages_streak || 0}</span>
+          </div>
         </div>
 
         {/* Daily Reflection */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🌙</span>
-            <div>
-              <p className="font-medium">Reflection</p>
-              <p className="text-sm text-muted-foreground">
-                {status?.daily_reflection_streak ? (
-                  <span className="text-orange-600 font-semibold">
-                    🔥 {status.daily_reflection_streak} day streak
-                  </span>
-                ) : (
-                  <span>No streak yet</span>
-                )}
-              </p>
-            </div>
+          <div className="flex items-center gap-2">
+            <Moon size={16} className="text-muted-foreground" />
+            <span className="text-sm">Daily reflection</span>
           </div>
-          {todayReflection ? (
-            <span className="text-green-600 text-xl font-bold">✓</span>
-          ) : (
-            <Link
-              href="/journal/reflection"
-              className="px-3 py-1.5 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 transition-colors"
-            >
-              Write
-            </Link>
-          )}
-        </div>
-
-        {/* This Week Summary */}
-        <div className="pt-4 border-t border-gray-200">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Entries this week:</span>
-            <span className="font-semibold">{status?.entries_this_week || 0}</span>
+          <div className="flex items-center gap-1.5">
+            <Flame size={16} className="text-primary" />
+            <span className="text-sm font-medium tabular-nums">{status?.daily_reflection_streak || 0}</span>
           </div>
-          {status?.weekly_review_completed && (
-            <div className="mt-2">
-              <span className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-800">
-                Weekly Review Complete ✓
-              </span>
-            </div>
-          )}
         </div>
       </div>
+
+      <Link
+        href="/journal"
+        className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+      >
+        Write now →
+      </Link>
     </div>
   );
 }

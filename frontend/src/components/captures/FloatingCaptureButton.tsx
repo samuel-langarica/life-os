@@ -1,5 +1,6 @@
 'use client';
 
+import { Plus } from 'lucide-react';
 import { useCaptureStore } from '@/stores/capture-store';
 
 export function FloatingCaptureButton() {
@@ -8,22 +9,10 @@ export function FloatingCaptureButton() {
   return (
     <button
       onClick={openModal}
-      className="fixed bottom-20 md:bottom-6 right-6 z-40 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-colors flex items-center justify-center"
-      aria-label="Quick capture"
+      className="fixed bottom-20 right-6 md:bottom-6 md:right-6 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 hover:scale-105 transition-all duration-200 flex items-center justify-center z-40 group"
+      aria-label="Quick Capture"
     >
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 4v16m8-8H4"
-        />
-      </svg>
+      <Plus size={24} className="group-hover:rotate-90 transition-transform duration-200" />
     </button>
   );
 }
