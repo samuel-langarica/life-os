@@ -3,6 +3,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { InboxWidget } from '@/components/dashboard/InboxWidget';
 import { CalendarWidget } from '@/components/dashboard/CalendarWidget';
+import { JournalWidget } from '@/components/dashboard/JournalWidget';
+import { ProjectsWidget } from '@/components/dashboard/ProjectsWidget';
 
 export function WeeklyDashboard() {
   return (
@@ -39,32 +41,10 @@ export function WeeklyDashboard() {
       </Card>
 
       {/* Journal Status */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Journal Status</CardTitle>
-          <CardDescription>Your journaling streak and today's entries</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-8 text-muted-foreground">
-            <p>Start journaling today</p>
-            <p className="text-sm mt-2">Coming soon...</p>
-          </div>
-        </CardContent>
-      </Card>
+      <JournalWidget />
 
       {/* Project Objectives */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Active Projects</CardTitle>
-          <CardDescription>Your current project objectives</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-8 text-muted-foreground">
-            <p>No active projects</p>
-            <p className="text-sm mt-2">Coming soon...</p>
-          </div>
-        </CardContent>
-      </Card>
+      <ProjectsWidget />
 
       {/* Inbox */}
       <InboxWidget />

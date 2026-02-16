@@ -1,7 +1,7 @@
 """Journal entry model."""
 from datetime import datetime, timezone, date
 from sqlalchemy import String, DateTime, Date, ForeignKey, JSON
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
@@ -42,6 +42,9 @@ class JournalEntry(Base):
         onupdate=lambda: datetime.now(timezone.utc),
         nullable=False
     )
+
+    # Relationships
+    user: Mapped["User"] = relationship("User", back_populates="journal_entries")
 
     def __repr__(self) -> str:
         return f"<JournalEntry(id={self.id}, type={self.entry_type}, date={self.entry_date})>"
