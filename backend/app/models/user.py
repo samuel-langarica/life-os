@@ -64,6 +64,21 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan"
     )
+    exercises: Mapped[list["Exercise"]] = relationship(
+        "Exercise",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
+    workout_programs: Mapped[list["WorkoutProgram"]] = relationship(
+        "WorkoutProgram",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
+    workout_sessions: Mapped[list["WorkoutSession"]] = relationship(
+        "WorkoutSession",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:
         return f"<User(id={self.id}, email={self.email}, username={self.username})>"

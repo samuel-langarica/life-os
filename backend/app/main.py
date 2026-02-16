@@ -11,6 +11,7 @@ from app.api.v1.captures import router as captures_router
 from app.api.v1.calendar import router as calendar_router
 from app.api.v1.journal import router as journal_router
 from app.api.v1.projects import router as projects_router
+from app.api.v1.fitness import router as fitness_router
 
 
 def create_app() -> FastAPI:
@@ -47,6 +48,7 @@ def create_app() -> FastAPI:
     app.include_router(calendar_router, prefix="/api")
     app.include_router(journal_router, prefix="/api")
     app.include_router(projects_router, prefix="/api")
+    app.include_router(fitness_router, prefix="/api")
 
     return app
 

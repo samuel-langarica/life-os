@@ -4,6 +4,7 @@ import { InboxWidget } from '@/components/dashboard/InboxWidget';
 import { CalendarWidget } from '@/components/dashboard/CalendarWidget';
 import { JournalWidget } from '@/components/dashboard/JournalWidget';
 import { ProjectsWidget } from '@/components/dashboard/ProjectsWidget';
+import { FitnessWidget } from '@/components/dashboard/FitnessWidget';
 
 export function WeeklyDashboard() {
   return (
@@ -12,6 +13,7 @@ export function WeeklyDashboard() {
       <CalendarWidget />
       <JournalWidget />
       <ProjectsWidget />
+      <FitnessWidget />
     </div>
   );
 }
