@@ -76,15 +76,15 @@ export function QuickCaptureModal() {
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-lg shadow-lg w-full max-w-lg mx-4 z-10">
+      <div className="relative bg-card rounded-lg shadow-lg w-full max-w-lg mx-4 z-10 border border-border">
         <form onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold">Quick Capture</h2>
+              <h2 className="text-xl font-semibold text-foreground">Quick Capture</h2>
               <button
                 type="button"
                 onClick={handleClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
                 disabled={isSubmitting}
               >
                 <svg
@@ -108,13 +108,13 @@ export function QuickCaptureModal() {
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full px-3 py-2 border border-border rounded-md bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
               rows={6}
               disabled={isSubmitting}
             />
           </div>
 
-          <div className="flex items-center justify-end gap-3 px-6 py-4 bg-gray-50 rounded-b-lg">
+          <div className="flex items-center justify-end gap-3 px-6 py-4 bg-secondary rounded-b-lg">
             <Button
               type="button"
               variant="ghost"

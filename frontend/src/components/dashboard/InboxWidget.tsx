@@ -1,7 +1,6 @@
 'use client';
 
 import useSWR from 'swr';
-import Link from 'next/link';
 import { Inbox } from 'lucide-react';
 import { capturesApi } from '@/lib/api/captures';
 
@@ -31,23 +30,12 @@ export function InboxWidget() {
       ) : error ? (
         <div className="text-sm text-destructive">Failed to load inbox count</div>
       ) : (
-        <>
-          <div className="mb-4">
-            <div className="text-3xl font-semibold tabular-nums">{count}</div>
-            <p className="text-sm text-muted-foreground">
-              {count === 0 ? 'Inbox clear' : count === 1 ? 'item to process' : 'items to process'}
-            </p>
-          </div>
-
-          {count > 0 && (
-            <Link
-              href="/captures"
-              className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              Process now →
-            </Link>
-          )}
-        </>
+        <div>
+          <div className="text-3xl font-semibold tabular-nums">{count}</div>
+          <p className="text-sm text-muted-foreground">
+            {count === 0 ? 'Inbox clear' : count === 1 ? 'item to process' : 'items to process'}
+          </p>
+        </div>
       )}
     </div>
   );

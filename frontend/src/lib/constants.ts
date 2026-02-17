@@ -12,9 +12,7 @@ export const ROUTES = {
   FITNESS_SESSION: '/fitness/session',
   FITNESS_HISTORY: '/fitness/history',
   PROJECTS: '/projects',
-  CAPTURES: '/captures',
   CALENDAR: '/calendar',
-  SETTINGS: '/settings',
 } as const;
 
 export const API_ROUTES = {

@@ -37,6 +37,36 @@
 
     --radius: 0.75rem;               /* Generous rounded corners */
   }
+
+  .light {
+    --background: 0 0% 100%;          /* #FFFFFF */
+    --foreground: 240 10% 4%;         /* #09090B */
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --primary: 38 92% 50%;            /* Keep amber accent */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 96%;          /* #F4F4F5 */
+    --secondary-foreground: 240 6% 10%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;   /* #71717A */
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 90%;             /* #E4E4E7 */
+    --input: 240 6% 90%;
+    --ring: 38 92% 50%;
+  }
 }
 
 @layer base {
