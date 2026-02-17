@@ -26,7 +26,7 @@ COMMAND
 
 ## Color Palette
 
-### Core Colors (HSL)
+### Dark Theme (Default) - `:root`
 ```css
 --background: 0 0% 4%              /* #0A0A0A - Deep charcoal */
 --foreground: 0 0% 98%             /* #FAFAFA - High contrast white */
@@ -38,9 +38,23 @@ COMMAND
 --destructive: 0 72% 51%           /* #E11D48 - Rose red (danger) */
 ```
 
+### Light Theme - `.light` class on `<html>`
+```css
+--background: 0 0% 100%            /* #FFFFFF */
+--foreground: 240 10% 4%           /* #09090B */
+--card: 0 0% 100%                  /* #FFFFFF */
+--primary: 38 92% 50%              /* #F59E0B - Amber (same) */
+--secondary: 240 5% 96%            /* #F4F4F5 */
+--muted-foreground: 240 4% 46%     /* #71717A */
+--border: 240 6% 90%               /* #E4E4E7 */
+--destructive: 0 72% 51%           /* #E11D48 (same) */
+```
+
+Theme is toggled via `ThemeToggle` component in TopBar. Persisted in localStorage.
+
 ### Usage
 - **Primary (Amber):** CTAs, active states, important actions
-- **Foreground (White):** Primary text, headings
+- **Foreground:** Primary text, headings
 - **Muted:** Secondary text, labels, timestamps
 - **Border:** Subtle dividers, card outlines
 - **Destructive:** Delete, warnings
@@ -241,40 +255,6 @@ box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3)
 ```css
 box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.5)
 ```
-
----
-
-## Implementation Checklist
-
-### Core
-- [x] Update globals.css
-- [x] Update Tailwind config
-- [ ] Install Lucide icons: `npm install lucide-react`
-- [ ] Create icon mapping utility
-
-### Components
-- [ ] Update Button component
-- [ ] Update Input component
-- [ ] Update Card component
-- [ ] Create IconButton component
-
-### Navigation
-- [ ] Update Sidebar (remove emojis, add icons)
-- [ ] Update BottomNav (mobile)
-- [ ] Update TopBar
-
-### Pages
-- [ ] Dashboard: Remove emojis, add premium widgets
-- [ ] Captures: Replace inbox emoji with icon
-- [ ] Calendar: Clean week view
-- [ ] Journal: Replace entry type emojis
-- [ ] Projects: Clean Kanban board
-
-### Widgets
-- [ ] InboxWidget: Icon + clean stats
-- [ ] CalendarWidget: Upcoming events list
-- [ ] JournalWidget: Streak display with icon
-- [ ] ProjectsWidget: Objectives list
 
 ---
 
